@@ -62,3 +62,8 @@ export var functionalSuites = [ 'tests/functional/all' ];
 
 // A regular expression matching URLs to files that should not be included in code coverage analysis
 export var excludeInstrumentation = /(?:node_modules|bower_components|tests)[\/\\]/;
+
+export var runnerClientReporter = {
+	id: 'WebDriver',
+	writeHtml: false
+};

@@ -197,13 +197,19 @@ module.exports = function (grunt) {
 			},
 			runner: {
 				options: {
-					reporters: [ 'runner', { id: 'LcovHtml', directory: 'html-report' } ]
+					reporters: [
+						{ id: 'Runner', writeHtml: false },
+						{ id: 'LcovHtml', directory: 'html-report' }
+					]
 				}
 			},
 			local: {
 				options: {
 					config: '<%= devDirectory %>/tests/intern-local',
-					reporters: [ 'runner', { id: 'LcovHtml', directory: 'html-report' } ]
+					reporters: [
+						{ id: 'Runner', writeHtml: false },
+						{ id: 'LcovHtml', directory: 'html-report' }
+					]
 				}
 			},
 			client: {

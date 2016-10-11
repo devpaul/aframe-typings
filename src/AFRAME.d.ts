@@ -1,3 +1,8 @@
+// Type definitions for AFRAME v0.3.1
+// Project: https://aframe.io/
+// Definitions by: Paul Shannon <https://github.com/devpaul/aframe-typings>
+// Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
+
 declare namespace AFrame {
 	export type Coordinate = { x: number, y: number, z: number };
 
@@ -91,6 +96,21 @@ declare namespace AFrame {
 		removeObject3D(type: string): void;
 		removeState(stateName: string): void;
 
+		getAttribute(type: string): string | any;
+		getAttribute(type: 'position'): Coordinate | null;
+		getAttribute(type: 'rotation'): Coordinate | null;
+		getAttribute(type: 'scale'): Coordinate | null;
+
+		getComputedAttribute(type: string): any;
+		getComputedAttribute(type: 'position'): Coordinate;
+		getComputedAttribute(type: 'rotation'): Coordinate;
+		getComputedAttribute(type: 'scale'): Coordinate;
+
+		setAttribute(type: string, value: any): void;
+		setAttribute(type: 'position', value: Coordinate): void;
+		setAttribute(type: 'rotation', value: Coordinate): void;
+		setAttribute(type: 'scale', value: Coordinate): void;
+
 		addEventListener(type: string, listener: EventListenerOrEventListenerObject, useCapture?: boolean): void;
 		addEventListener(type: 'child-attached', listener: DetailEventHandler<{ el: Element | Entity }>, useCapture?: boolean): void;
 		addEventListener(type: 'componentchanged', listener: DetailEventHandler<{ name: string }>, useCapture?: boolean): void;
@@ -117,7 +137,10 @@ declare namespace AFrame {
 		hasLoaded: boolean;
 
 		addEventListener(type: string, listener: EventListenerOrEventListenerObject, useCapture?: boolean): void;
-		addEventListener(name: 'loaded', handler: EventListener, useCapture?: boolean): void;
+		addEventListener(type: 'enter-vr', listener: EventListener, useCapture?: boolean): void;
+		addEventListener(type: 'exit-vr', listener: EventListener, useCapture?: boolean): void;
+		addEventListener(type: 'loaded', listener: EventListener, useCapture?: boolean): void;
+		addEventListener(type: 'renderstart', listener: EventListener, useCapture?: boolean): void;
 	}
 
 	// TODO implement

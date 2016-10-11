@@ -1,6 +1,6 @@
 {
   "name": "aframe-typings",
-  "version": "0.3.1.0",
+  "version": "0.3.1-0",
   "description": "TypeScript typings for A-Frame",
   "license": "MPL-2.0",
   "main": "src/main.js",
