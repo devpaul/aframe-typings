@@ -1,19 +1,19 @@
 {
   "name": "aframe-typings",
-  "version": "0.3.1-0",
+  "version": "0.3.1-0-pre",
   "description": "TypeScript typings for A-Frame",
   "license": "MPL-2.0",
   "main": "src/main.js",
   "bugs": {
-    "url": "https://github.com/devpaul/ts-aframe-boilerplate/issues"
+    "url": "https://github.com/devpaul/aframe-typings/issues"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/devpaul/ts-aframe-boilerplate.git"
+    "url": "https://github.com/devpaul/aframe-typings.git"
   },
   "scripts": {
     "install": "typings install",
-    "test": "intern-runner config=tests/intern-local"
+    "test": "grunt test"
   },
   "dependencies": {
     "aframe": "^0.3.1",

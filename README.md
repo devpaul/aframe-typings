@@ -1,59 +1,39 @@
-# A-Frame w/ TypeScript template
+# A-Frame TypeScript Typings
 
-This is a boilerplate for developing [A-Frame](http://aframe.io/) VR Applications. 
-It features a complete development environment including
+This is a repository for [A-Frame](http://aframe.io/) typings.
 
-* [A-Frame](https://aframe.io)
-* [TypeScript](https://www.typescriptlang.org/)
-* [Dojo 2](http://dojotoolkit.org/community/roadmap/)
-* [Intern](http://theintern.github.io/)
-* [Grunt](http://gruntjs.com/)
+Currently this repository is a *work in progress* and provides a basic set of typings to work with `Entity` and
+	`Component`. Contributors welcome <3.
+  
+## Usage
 
-We hope this is a useful starting place to begin your project <3.
+Include the AFRAME.d.ts file as part of your TypeScript project. An 
+	[A-Frame Boilerplate](https://github.com/devpaul/ts-dojo-aframe-boilerplate) that uses these typings is available
+	as a quick start. There is also a number of [A-Frame Experiments](https://github.com/devpaul/aframe-experiments) 
+	written in TypeScript.
 
-## Quick Start
+As we update typings, we plan to keep them up-to-date with the latest stable version of TypeScript.
+
+## Developing
+
+The quickest way to get started with adding additional types is:
 
 * `npm install`
-* `typings install`
-* `grunt`
-* launch http://localhost/_build/index.html
+* `grunt watch`
 
-## Publish to GitHub Pages
+And viola! Every time a change is detected the project will be rebuilt.
 
-This boilerplate supports publishing to a GitHub Pages website. Simply type:
+## Testing
 
-`grunt publish`
+Definitely Typed recommends that all typings are built against some code to ensure that they compile correctly. We
+	take the additional step of running [Intern](https://theintern.github.io/intern/#what-is-intern), a real testing
+	framework, against types to ensure assumptions like optional types are exercised and leaf blocks of code are
+	tested.
 
-Your entire project will be built, all of the libs copied to the `dist` directory, and the `dist` directory
-will be checked into the `gh-pages` to be hosted by GitHub. 
+Test can be run using `grunt test`
 
-See our boilerplate at [https://devpaul.github.io/ts-dojo-aframe-boilerplate](https://devpaul.github.io/ts-dojo-aframe-boilerplate)
+## Versioning
 
-## TODOs
-
-* Test/Ensure Vive support
-* Add instructions for obtaining supported Vive browsers (FF nightly and Chrome)
-* Add A-Frame (three.js, etc...) typings
-* Add a quickstart getting start w/ development
-* Implement a mobile + https development server + proxy solution w/ instructions
-	* self-signed certs
-	* ngrok
-	* Lets Encrypt + Proxy
-	* localhost
-* Improve Gruntfile neatness
-* Add some unit tests
-* Add functional testing strategy + examples (maybe adapter pattern?)
-
-## Grunt Commands
-
-* `grunt` - compiles files
-* `grunt watch` - watches files for changes and rebuilds
-* `grunt lint` - validates style rules
-* `grunt test` - runs intern's node client
-* `grunt test-local` - runs intern's runner with local configuration
-* `grunt test-proxy` - starts intern's testing proxy
-* `grunt test-runner` - runs intern's runner
-* `grunt ci` - runs tests in a continuous integration environment
-* `grunt clean` - cleans development work
-* `grunt dist` - builds a distribution ready to be published
-* `grunt publish` - builds a dist and publishes it to Github Pages
+Versioning tracks the A-Frame version the typings were built and tested against. Multiple releases against the same
+	version of A-Frame (i.e. due to fixes) are denoted after the dash (`-`) in the version and incremented from 0;
+	i.e. 0.3.1-1 is the second release of typings against A-Frame version 0.3.1.
