@@ -20,8 +20,8 @@ declare namespace AFrame {
 		schema: SchemaUtils;
 		shaders: { [ key: string ]: ShaderDescriptor };
 		systems: { [key: string]: System };
-		THREE: any; //THREE;
-		TWEEN: any; // TWEEN;
+		THREE: any; // TODO THREE
+		TWEEN: any; // TODO TWEEN
 		utils: Utils;
 		version: string;
 	}
@@ -218,7 +218,7 @@ declare namespace AFrame {
 		behaviors: Behavior[];
 		camera: THREE.Camera;
 		canvas: HTMLCanvasElement;
-		effect: VREffect; // THREE.VREffect https://github.com/mrdoob/three.js/blob/master/examples/js/effects/VREffect.js
+		effect: THREE.VREffect;
 		isMobile: boolean;
 		object3D: THREE.Scene;
 		renderer: THREE.WebGLRenderer;
@@ -302,13 +302,6 @@ declare namespace AFrame {
 		diff(a: Object, b: Object): Object;
 		extend(target: Object, ... source: Object[]): Object;
 		extendDeep(target: Object, ... source: Object[]): Object;
-	}
-
-	export interface VREffect {
-		isPresenting: boolean;
-		// TODO external typing
-		// THREE.VREffect
-		// https://github.com/mrdoob/three.js/blob/master/examples/js/effects/VREffect.js
 	}
 }
 
