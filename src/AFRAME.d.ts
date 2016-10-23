@@ -4,14 +4,64 @@
 // Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
 
 declare namespace AFrame {
-	export type Coordinate = { x: number, y: number, z: number };
-
-	interface DetailEventHandler<D> {
-		(event: Event & { detail: D }): void;
+	export interface AframeFramework {
+		AEntity: Entity;
+		ANode: ANode;
+		AScene: Scene;
+		components: { [ key: string ]: ComponentDescriptor };
+		geometries: { [ key: string ]: GeometryDescriptor };
+		primitives: { [ key: string ]: Entity };
+		registerComponent(name: string, component: ComponentDefinition): ComponentConstructor;
+		registerElement(name: string, element: ANode): void;
+		registerGeometry(name: string, geometery: THREE.Geometry): Geometry;
+		registerPrimitive(name: string, primitive: PrimitiveDefinition): void;
+		registerShader(name: string, shader: ShaderDefinition): void;
+		registerSystem(name: string, definition: SystemDefinition): void;
+		schema: SchemaUtils;
+		shaders: { [ key: string ]: ShaderDescriptor };
+		systems: { [key: string]: System };
+		THREE: any; //THREE;
+		TWEEN: any; // TWEEN;
+		utils: Utils;
+		version: string;
 	}
 
-	export type PropertyTypes = 'array' | 'boolean' | 'color' | 'int' | 'number' | 'selector' |
-		'selectorAll' | 'src' | 'string' | 'vec2' | 'vec3' | 'vec4';
+	export interface Animation {
+		attribute: string;
+		begin: string | number;
+		delay: number;
+		direction: 'alternate' | 'alternateReverse' | 'normal' | 'reverse';
+		dur: number;
+		easing(): void;
+		end: string;
+		fill: 'backwards' | 'both' | 'forwards' | 'none';
+		from: any; // TODO type
+		repeat: number | 'indefinite';
+		to: number;
+	}
+
+	export interface ANode extends HTMLElement {
+		// Only public APIs added. Many methods intentionally left out.
+		// createdCallback
+		// attachedCallback
+		// attributeChangedCallback
+		closestScene(): Scene;
+		closest(selector: string): ANode;
+		// detachedCallback
+		load(cb?: () => void, childFilter?: (el: Element) => boolean): void;
+		// updateMixins
+		registerMixin(id: string): void;
+		setAttribute(type: string, newValue: any): void;
+		unregisterMixin(id: string): void;
+		removeMixinListener(id: string): void;
+		attachMixinListener(mixin: HTMLElement): void;
+		emit(name: string, detail?: any, bubbles?: boolean): void;
+		emitter(name: string, detail?: any, bubbles?: boolean): () => void;
+	}
+
+	interface Behavior {
+		tick(): void;
+	}
 
 	export interface Component {
 		attrName?: string;
@@ -21,7 +71,7 @@ declare namespace AFrame {
 		id: string;
 		multiple?: boolean;
 		name: string;
-		schema: { [key: string]: any };
+		schema: Schema;
 
 		init(): void;
 		update(oldData: any): void;
@@ -33,7 +83,7 @@ declare namespace AFrame {
 		remove(): void;
 
 		flushToDOM(): void;
-		extendSchema(update: { [key: string]: any }): void;
+		extendSchema(update: Schema): void;
 	}
 
 	export interface ComponentConstructor {
@@ -45,7 +95,7 @@ declare namespace AFrame {
 		el?: Entity;
 		id?: string;
 		multiple?: boolean;
-		schema?: { [key: string]: any };
+		schema?: Schema;
 
 		init?(): void;
 		update?(oldData: any): void;
@@ -64,7 +114,7 @@ declare namespace AFrame {
 		dependencies: string[] | null;
 		multiple: boolean | null;
 
-		// internal APIs
+		// internal APIs2
 		// parse
 		// parseAttrValueForCache
 		// schema
@@ -73,7 +123,13 @@ declare namespace AFrame {
 		[ key: string ]: any;
 	}
 
-	export interface Entity extends Element {
+	export type Coordinate = { x: number, y: number, z: number };
+
+	interface DetailEventHandler<D> {
+		(event: Event & { detail: D }): void;
+	}
+
+	export interface Entity extends ANode {
 		components: any;
 		isPlaying: boolean;
 		object3D: THREE.Object3D;
@@ -81,7 +137,6 @@ declare namespace AFrame {
 		sceneEl?: Scene;
 
 		addState(name: string): void;
-		emit(name: string, detail?: any, bubbles?: boolean): void;
 		flushToDOM(): void;
 		getAttribute(attr: string): any;
 		getComputedAttribute(attr: string): any;
@@ -128,13 +183,52 @@ declare namespace AFrame {
 		addEventListener(name: 'schemachanged', handler: DetailEventHandler<{ componentName: string }>, useCapture?: boolean): void;
 	}
 
-	// TODO implement
-	export interface System {
+	export interface Geometry {
+		name: string;
+		geometry: THREE.Geometry;
+		schema: Schema;
+		update(data: Object): void;
+		[ key: string ]: any;
 	}
 
-	// TODO implement
-	export interface Scene extends HTMLElement {
-		hasLoaded: boolean;
+	export interface GeometryDefinition {
+		// TODO implement
+	}
+
+	export interface GeometryDescriptor {
+		Geometry: Geometry;
+		schema: Schema;
+	}
+
+	export interface MultiPropertySchema {
+		[ key: string ]: SinglePropertySchema<any>
+	}
+
+	export interface PrimitiveDefinition {
+		defaultComponents?: any; // TODO cleanup type
+		deprecated?: boolean;
+		mappings?: any; // TODO cleanup type
+		transforms?: any; // TODO cleanup type
+	}
+
+	export type PropertyTypes = 'array' | 'boolean' | 'color' | 'int' | 'number' | 'selector' |
+		'selectorAll' | 'src' | 'string' | 'vec2' | 'vec3' | 'vec4';
+
+	export interface Scene extends Entity {
+		behaviors: Behavior[];
+		camera: THREE.Camera;
+		canvas: HTMLCanvasElement;
+		effect: VREffect; // THREE.VREffect https://github.com/mrdoob/three.js/blob/master/examples/js/effects/VREffect.js
+		isMobile: boolean;
+		object3D: THREE.Scene;
+		renderer: THREE.WebGLRenderer;
+		renderStarted: boolean;
+		systems: System[];
+		time: number;
+
+		enterVR(): Promise<void> | void;
+		exitVR(): Promise<void> | void;
+		reload(): void;
 
 		addEventListener(type: string, listener: EventListenerOrEventListenerObject, useCapture?: boolean): void;
 		addEventListener(type: 'enter-vr', listener: EventListener, useCapture?: boolean): void;
@@ -143,37 +237,78 @@ declare namespace AFrame {
 		addEventListener(type: 'renderstart', listener: EventListener, useCapture?: boolean): void;
 	}
 
-	// TODO implement
-	export interface ANode {
+	export type Schema = SinglePropertySchema<any> | MultiPropertySchema;
 
+	interface SchemaUtils {
+		isSingleProperty(schema: Schema): boolean;
+		process(schema: Schema): boolean
 	}
 
-	// TODO implement
-	export interface Utils {
+	export interface Shader {
+		name: string;
+		schema: Schema;
+	}
+
+	export interface ShaderDefinition {
+		// TODO implement
+	}
+
+	export interface ShaderDescriptor {
+		Shader: Shader;
+		schema: Schema;
+	}
+
+	export interface SinglePropertySchema<T> {
+		type?: PropertyTypes;
+		'default'?: T;
+		parse?(value: string): T;
+		stringify?(value: T): string;
+		[ key: string ]: any
+	}
+
+	export interface System {
+		data: any;
+		schema: Schema;
+		init(): void;
+		pause(): void;
+		play(): void;
+		tick?(): void;
+	}
+
+	export interface SystemDefinition {
+		schema?: Schema
+		init?(): void;
+		pause?(): void;
+		play?(): void;
+		tick?(): void;
+		[ key: string ]: any;
+	}
+
+	interface Utils {
 		coordinates: {
+			isCoordinate(value: string): boolean;
 			parse(value: string): Coordinate;
 			stringify(coord: Coordinate): string;
 		};
+		entity: {
+			getComponentProperty(entity: Entity, componentName: string, delimiter?: string): any;
+			setComponentProperty(entity: Entity, componentName: string, value: any, delimiter?: string): void;
+		};
+		styleParser: {
+			parse(value: string): Object;
+			stringify(data: Object): string;
+		};
+		deepEqual(a: Object, b: Object): boolean;
+		diff(a: Object, b: Object): Object;
+		extend(target: Object, ... source: Object[]): Object;
+		extendDeep(target: Object, ... source: Object[]): Object;
 	}
 
-	export interface AframeFramework {
-		AEntity: Entity;
-		ANode: ANode; // TODO define
-		AScene: Scene;
-		components: { [ key: string ]: ComponentDescriptor };
-		geometries: any; // TODO define?
-		primitives: any; // TODO define?
-		registerComponent(name: string, component: ComponentDefinition): ComponentConstructor;
-		registerElement(name: string, element: ANode): void;
-		registerGeometry(name: string, geometery: THREE.Geometry): void;
-		registerPrimitive(name: string, primitive: any): void; // TODO cleanup
-		schema: any; // TODO define
-		shaders: any; // TODO define
-		systems: { [key: string]: System }; // TODO define
-		THREE: any;  // TODO cleanup
-		TWEEN: any; // TODO global tween.js object
-		utils: Utils;
-		version: string;
+	export interface VREffect {
+		isPresenting: boolean;
+		// TODO external typing
+		// THREE.VREffect
+		// https://github.com/mrdoob/three.js/blob/master/examples/js/effects/VREffect.js
 	}
 }
 

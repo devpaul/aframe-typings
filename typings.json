@@ -1,11 +1,11 @@
 {
   "name": "ts-aframe",
   "globalDependencies": {
-    "AFRAME": "file:./src/AFRAME.d.ts",
     "dojo-loader": "npm:dojo-loader",
     "es6-shim": "registry:dt/es6-shim#0.31.2+20160602141504",
     "symbol-shim": "github:dojo/typings/custom/symbol-shim/symbol-shim.d.ts#9a0185f465a3febe2bb1ff3f1210f43e5f96c5d2",
     "three": "registry:dt/three#0.0.0+20160906062307",
+    "tween.js": "registry:dt/tween.js#0.0.0+20160608102153",
     "webvr-api": "registry:dt/webvr-api#0.0.0+20160608064235"
   },
   "globalDevDependencies": {
