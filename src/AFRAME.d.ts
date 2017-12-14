@@ -3,6 +3,15 @@
 // Definitions by: Paul Shannon <https://github.com/devpaul/aframe-typings>
 // Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
 
+declare namespace THREE {
+	export interface Geometry {}
+	export interface Object3D {}
+	export interface Camera {}
+	export interface VREffect {}
+	export interface Scene {}
+	export interface WebGLRenderer {}
+}
+
 declare namespace AFrame {
 	export interface AframeFramework {
 		AEntity: Entity;
