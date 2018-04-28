@@ -37,9 +37,9 @@ declare namespace AFrame {
 		components: { [key: string]: ComponentDescriptor };
 		geometries: { [key: string]: GeometryDescriptor };
 		primitives: { [key: string]: Entity };
-		registerComponent<T extends Component>(
+		registerComponent<T>(
 			name: string,
-			component: ComponentDefinition<T>
+			component: T
 		): ComponentConstructor<T>;
 		registerElement(name: string, element: ANode): void;
 		registerGeometry<T extends Geometry>(
@@ -110,23 +110,27 @@ declare namespace AFrame {
 		schema: Schema<T>;
 		system: S | undefined;
 
-		init(this: this, data?: T): void;
-		pause(this: this): void;
-		play(this: this): void;
-		remove(this: this): void;
-		tick?(this: this, time: number, timeDelta: number): void;
-		update(this: this, oldData: T): void;
-		updateSchema?(this: this): void;
+		init(data?: T): void;
+		pause(): void;
+		play(): void;
+		remove(): void;
+		tick?(time: number, timeDelta: number): void;
+		update(oldData: T): void;
+		updateSchema?(): void;
 
-		extendSchema(this: this, update: Schema): void;
-		flushToDOM(this: this): void;
+		extendSchema(update: Schema): void;
+		flushToDOM(): void;
 	}
 
-	interface ComponentConstructor<T extends Component> {
-		new (el: Entity, attrValue: string, id: string): T;
+	interface ComponentConstructor<T> {
+		new (el: Entity, attrValue: string, id: string): T & Component;
+		prototype: T & {
+			name: string;
+			system: System;
+			play(): void;
+			pause(): void;
+		};
 	}
-
-	type ComponentDefinition<T extends Component = Component> = Partial<T>;
 
 	interface ComponentDescriptor<T extends Component = Component> {
 		Component: ComponentConstructor<T>;
@@ -230,7 +234,7 @@ declare namespace AFrame {
 		geometry: THREE.Geometry;
 		schema: Schema<any>;
 
-		init(this: this, data: { [P in keyof this['schema']]: any }): void;
+		init(data: { [P in keyof this['schema']]: any }): void;
 		// Would like the above to be:
 		//  init?(this: this, data?: { [P in keyof T['schema']]: T['schema'][P]['default'] } ): void;
 		//  I think this is prevented by the following issue: https://github.com/Microsoft/TypeScript/issues/21760.
@@ -316,9 +320,9 @@ declare namespace AFrame {
 		vertexShader: string;
 		fragmentShader: string;
 
-		init(this: this, data?: this['data']): void;
-		tick?(this: this, time: number, timeDelta: number): void;
-		update(this: this, oldData: this['data']): void;
+		init(data?: this['data']): void;
+		tick?(time: number, timeDelta: number): void;
+		update(oldData: this['data']): void;
 	}
 
 	interface ShaderConstructor<T extends Shader> {
@@ -342,10 +346,10 @@ declare namespace AFrame {
 	interface System {
 		data: { [key: string]: any };
 		schema: Schema<this['data']>;
-		init(this: this): void;
-		pause(this: this): void;
-		play(this: this): void;
-		tick?(this: this, t: number, dt: number): void;
+		init(): void;
+		pause(): void;
+		play(): void;
+		tick?(t: number, dt: number): void;
 	}
 
 	interface SystemConstructor<T extends System = System> {

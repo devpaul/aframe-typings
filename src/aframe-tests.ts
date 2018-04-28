@@ -51,7 +51,8 @@ interface TestComponent extends AFrame.Component {
 	system: TestSystem;
 }
 
-const Component = AFRAME.registerComponent<TestComponent>('test-component', {
+const Component = AFRAME.registerComponent('test-component', {
+	defaultValue: 0,
 	schema: {
 		myProperty: {
 			default: [],
@@ -119,3 +120,14 @@ AFRAME.registerGeometry<TestGeometry>('a-test-geometry', {
 		temp;
 	}
 });
+
+const MyComponent = AFRAME.registerComponent('my-component', {
+	defaultValue: 0,
+	init() {
+		this.data.num = this.defaultValue;
+	}
+});
+
+const myComponent = new MyComponent({} as AFrame.Entity, 'test', 'id');
+console.log(myComponent.defaultValue);
+myComponent.play();
