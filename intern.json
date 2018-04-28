@@ -1,0 +1,27 @@
+{
+	"environments": [
+		{ "browser": "chrome" }
+	],
+	"suites": [ "tests/unit/all" ],
+	"functionalSuites": [],
+	"tunnel": "selenium",
+
+	"browser": {
+		"loader": {
+			"script": "dojo2",
+			"options": {
+				"packages": {
+					"aframe": "./node_modules/aframe/dist/aframe.js",
+					"src": "./_build/src",
+					"tests": "./_build/tests"
+				}
+			}
+		}
+	},
+
+	"configs": {
+		"ci": {
+			"tunnel": "browserstack"
+		}
+	}
+}

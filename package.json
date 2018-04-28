@@ -1,9 +1,10 @@
 {
   "name": "aframe-typings",
-  "version": "0.3.1-0-pre",
+  "version": "0.7.0-pre",
   "description": "TypeScript typings for A-Frame",
   "license": "MPL-2.0",
-  "main": "src/main.js",
+  "main": "src/index.js",
+  "types": "./src/index.d.ts",
   "bugs": {
     "url": "https://github.com/devpaul/aframe-typings/issues"
   },
@@ -12,32 +13,20 @@
     "url": "https://github.com/devpaul/aframe-typings.git"
   },
   "scripts": {
-    "install": "typings install",
-    "test": "grunt test"
+    "build": "tsc",
+    "pretty": "prettier --write src/** tests/**",
+    "test": "intern"
   },
   "dependencies": {
-    "aframe": "^0.3.1",
-    "dojo-core": "^2.0.0-alpha.11",
-    "dojo-has": "^2.0.0-alpha.3",
-    "dojo-loader": "^2.0.0-beta.5",
-    "dojo-shim": "^2.0.0-alpha.3"
+    "@types/three": "^0.91.10",
+    "@types/tween.js": "^16.9.0",
+    "aframe": "^0.3.1"
   },
   "devDependencies": {
-    "grunt": "^1.0.1",
-    "grunt-contrib-clean": "^1.0.0",
-    "grunt-contrib-copy": "^1.0.0",
-    "grunt-contrib-jshint": "^1.0.0",
-    "grunt-contrib-symlink": "^1.0.0",
-    "grunt-contrib-watch": "^1.0.0",
-    "grunt-dojo2": "^2.0.0-beta.15",
-    "grunt-gh-pages": "^2.0.0",
-    "grunt-jscs": "^3.0.1",
-    "grunt-shell": "^1.3.1",
-    "grunt-text-replace": "^0.4.0",
-    "grunt-ts": "^6.0.0-beta.3",
-    "grunt-tslint": "^3.2.1",
-    "intern": "^3.3.1",
-    "tslint": "^3.15.1",
-    "typescript": "2.1.0-dev.20160819"
+    "@dojo/loader": "^0.1.1",
+    "@types/node": "^8.10.10",
+    "intern": "^4.2.0",
+    "prettier": "^1.12.1",
+    "typescript": "^2.8.3"
   }
 }

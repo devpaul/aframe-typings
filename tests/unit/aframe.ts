@@ -1,6 +1,6 @@
-import 'aframe';
-import { describe, it } from 'intern!bdd';
-import * as expect from 'intern/chai!expect';
+import '..';
+const { describe, it } = intern.getInterface('bdd');
+const { expect } = intern.getPlugin('chai');
 
 /**
  * A-Frame exposes its public interface through the window.AFRAME browser global.

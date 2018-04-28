@@ -1,29 +1,25 @@
 {
-	"version": "2.0.0",
+	"version": "2.8.0",
 	"compilerOptions": {
 		"declaration": false,
+		"lib": [
+			"dom",
+			"es5",
+			"es2015.symbol",
+			"es2015.symbol.wellknown",
+			"es2015.promise"
+		],
 		"module": "umd",
 		"noImplicitAny": true,
-		"outDir": "_build/tests",
+		"outDir": "_build",
 		"baseUrl": ".",
-		"paths": {
-			"dojo-core/*": [
-				"node_modules/dojo-core/*"
-			],
-			"dojo-has/*": [
-				"node_modules/dojo-has/*"
-			],
-			"dojo-shim/*": [
-				"node_modules/dojo-shim/*"
-			]
-		},
 		"removeComments": false,
 		"sourceMap": true,
+		"types": [ "intern" ],
 		"target": "es5",
 		"moduleResolution": "node"
 	},
 	"include": [
-		"./typings/index.d.ts",
 		"./src/**/*.ts",
 		"./tests/**/*.ts"
 	]

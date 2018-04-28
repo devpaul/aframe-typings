@@ -1,6 +1,5 @@
-import { describe, beforeEach, afterEach, it } from 'intern!bdd';
-import * as expect from 'intern/chai!expect';
-import Promise from 'dojo-shim/Promise';
+const {describe, beforeEach, afterEach, it}  = intern.getInterface('bdd');
+const { expect } = intern.getPlugin('chai');
 
 function assertStaticShape(entity: AFrame.Entity) {
 	expect(entity).to.exist;

@@ -1,9 +1,9 @@
-import 'aframe';
-import {describe, beforeEach, afterEach, it} from 'intern!bdd';
-import * as expect from 'intern/chai!expect';
+import '..';
+const {describe, beforeEach, afterEach, it}  = intern.getInterface('bdd');
+const { expect } = intern.getPlugin('chai');
 
 describe('components', () => {
-	let Component: AFrame.ComponentConstructor;
+	let Component: AFrame.ComponentConstructor<any>;
 
 	afterEach(() => {
 		if (Component) {
