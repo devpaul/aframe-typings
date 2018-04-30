@@ -353,46 +353,64 @@ export interface Utils {
 	): (t: number, dt: number) => void;
 }
 
-export default interface AFrame {
+// Default export
+export interface AFrame {
+	THREE: THREELib;
+	TWEEN: TWEENLib;
+	AEntity: Entity;
+	ANode: ANode;
+	AScene: Scene;
+	components: ObjectMap<ComponentDescriptor>;
+	geometries: ObjectMap<GeometryDescriptor>;
+	primitives: ObjectMap<Entity>;
+	schema: SchemaUtils;
+	shaders: ObjectMap<ShaderDescriptor>;
+	systems: ObjectMap<SystemConstructor>;
+	utils: Utils;
+	version: string;
 
+	registerComponent<T>(name: string, component: T): ComponentConstructor<T>;
+	registerElement(name: string, element: ANode): void;
+	registerGeometry<T extends Geometry>(
+		name: string,
+		geometry: GeometryDefinition<T>
+	): GeometryConstructor<T>;
+	registerPrimitive(name: string, primitive: PrimitiveDefinition): void;
+	registerShader<T extends Shader>(name: string, shader: T): ShaderConstructor<T>;
+	registerSystem<T extends System>(
+		name: string,
+		definition: SystemDefinition<T>
+	): SystemConstructor<T>;
 }
+
+export const AFrame: AFrame;
+export default AFrame;
 
 // Globals
 declare var hasNativeWebVRImplementation: boolean;
 
 declare global {
 	namespace AFRAME {
-		const THREE: THREELib;
-		const TWEEN: TWEENLib;
-		const AEntity: Entity;
-		const ANode: ANode;
-		const AScene: Scene;
-		const components: ObjectMap<ComponentDescriptor>;
-		const geometries: ObjectMap<GeometryDescriptor>;
-		const primitives: ObjectMap<Entity>;
-		const schema: SchemaUtils;
-		const shaders: ObjectMap<ShaderDescriptor>;
-		const systems: ObjectMap<SystemConstructor>;
-		const utils: Utils;
+		const THREE: AFrame['THREE'];
+		const TWEEN: AFrame['TWEEN'];
+		const AEntity: AFrame['AEntity'];
+		const ANode: AFrame['ANode'];
+		const AScene: AFrame['AScene'];
+		const components: AFrame['components'];
+		const geometries: AFrame['geometries'];
+		const primitives: AFrame['primitives'];
+		const schema: AFrame['schema'];
+		const shaders: AFrame['shaders'];
+		const systems: AFrame['systems'];
+		const utils: AFrame['utils'];
 		const version: string;
 
-		function registerComponent<T>(name: string, component: T): ComponentConstructor<T>;
-
-		function registerElement(name: string, element: ANode): void;
-
-		function registerGeometry<T extends Geometry>(
-			name: string,
-			geometry: GeometryDefinition<T>
-		): GeometryConstructor<T>;
-
-		function registerPrimitive(name: string, primitive: PrimitiveDefinition): void;
-
-		function registerShader<T extends Shader>(name: string, shader: T): ShaderConstructor<T>;
-
-		function registerSystem<T extends System>(
-			name: string,
-			definition: SystemDefinition<T>
-		): SystemConstructor<T>;
+		const registerComponent: AFrame['registerComponent'];
+		const registerElement: AFrame['registerElement'];
+		const registerGeometry: AFrame['registerGeometry'];
+		const registerPrimitive: AFrame['registerPrimitive'];
+		const registerShader: AFrame['registerShader'];
+		const registerSystem: AFrame['registerSystem'];
 	}
 
 	/**
