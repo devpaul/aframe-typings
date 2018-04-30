@@ -1,4 +1,5 @@
-// Global
+import { Component, Entity, Geometry, MultiPropertySchema, System, SystemDefinition } from 'aframe';
+
 const threeCamera = new AFRAME.THREE.Camera();
 AFRAME.TWEEN.Easing;
 
@@ -16,12 +17,14 @@ entity.setAttribute('material', 'color', 'red');
 
 entity.components['geometry'].data;
 
-type MyEntity = AFrame.Entity<{
+type MyEntity = Entity<{
 	camera: THREE.Camera;
 	material: THREE.Material;
 	sound: { pause(): void };
 }>;
-const camera = (document.querySelector('a-entity[camera]') as MyEntity).components.camera;
+
+document.querySelector('a-entity[camera]').components.camera
+const camera = (document.querySelector('a-entity[camera]')).components.camera;
 const material = (document.querySelector('a-entity[material]') as MyEntity).components.material;
 (document.querySelector('a-entity[sound]') as MyEntity).components.sound.pause();
 
@@ -39,7 +42,7 @@ entity.addEventListener('child-detached', event => {
 
 // Components
 
-interface TestComponent extends AFrame.Component {
+interface TestComponent extends Component {
 	multiply: (f: number) => number;
 
 	data: {
@@ -84,13 +87,13 @@ scene.hasLoaded;
 
 // System
 
-interface TestSystem extends AFrame.System {
+interface TestSystem extends System {
 	data: {
 		counter: number;
 	};
 }
 
-const testSystem: AFrame.SystemDefinition<TestSystem> = {
+const testSystem: SystemDefinition<TestSystem> = {
 	schema: {
 		counter: 0
 	},
@@ -104,8 +107,8 @@ AFRAME.registerSystem('test-component', testSystem);
 
 // Register Custom Geometry
 
-interface TestGeometry extends AFrame.Geometry {
-	schema: AFrame.MultiPropertySchema<{
+interface TestGeometry extends Geometry {
+	schema: MultiPropertySchema<{
 		groupIndex: number;
 	}>;
 }
@@ -115,7 +118,7 @@ AFRAME.registerGeometry<TestGeometry>('a-test-geometry', {
 		groupIndex: { default: 0 }
 	},
 	init(data) {
-		this.geometry = new THREE.Geometry();
+		this.geometry = new AFRAME.THREE.Geometry();
 		const temp = data.groupIndex;
 		temp;
 	}
@@ -128,6 +131,6 @@ const MyComponent = AFRAME.registerComponent('my-component', {
 	}
 });
 
-const myComponent = new MyComponent({} as AFrame.Entity, 'test', 'id');
+const myComponent = new MyComponent({} as Entity, 'test', 'id');
 console.log(myComponent.defaultValue);
 myComponent.play();

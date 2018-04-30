@@ -1,7 +1,9 @@
+import { Entity, Scene } from '../../src/aframe';
+
 const {describe, beforeEach, afterEach, it}  = intern.getInterface('bdd');
 const { expect } = intern.getPlugin('chai');
 
-function assertStaticShape(entity: AFrame.Entity) {
+function assertStaticShape(entity: Entity) {
 	expect(entity).to.exist;
 
 	expect(entity.components).to.exist;
@@ -26,7 +28,7 @@ function assertStaticShape(entity: AFrame.Entity) {
 }
 
 describe('entity', () => {
-	let entity: AFrame.Entity;
+	let entity: Entity;
 
 	beforeEach(() => {
 		entity = <any> document.createElement('a-entity');
@@ -40,7 +42,7 @@ describe('entity', () => {
 	});
 
 	describe('entity is part of a scene', () => {
-		let scene: AFrame.Scene;
+		let scene: Scene;
 
 		beforeEach(() => {
 			return new Promise(function (resolve) {

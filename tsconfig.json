@@ -12,11 +12,11 @@
 		"module": "umd",
 		"noImplicitAny": true,
 		"outDir": "_build",
-		"baseUrl": ".",
+		"baseUrl": "./src",
 		"removeComments": false,
 		"sourceMap": true,
-		"types": [ "intern" ],
 		"target": "es5",
+		"types": [ "intern" ],
 		"moduleResolution": "node"
 	},
 	"include": [

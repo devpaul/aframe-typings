@@ -1,9 +1,9 @@
-import '..';
+import { ComponentConstructor, Entity } from '../../src/aframe';
 const {describe, beforeEach, afterEach, it}  = intern.getInterface('bdd');
 const { expect } = intern.getPlugin('chai');
 
 describe('components', () => {
-	let Component: AFrame.ComponentConstructor<any>;
+	let Component: ComponentConstructor<any>;
 
 	afterEach(() => {
 		if (Component) {
@@ -18,7 +18,7 @@ describe('components', () => {
 
 		it('has the expected shape', () => {
 			expect(Component).to.exist;
-			const entity: AFrame.Entity = <any> document.createElement('a-entity');
+			const entity: Entity = <any> document.createElement('a-entity');
 			const component = new Component(entity, 'test', 'test');
 
 			expect(component.attrName).to.exist;
